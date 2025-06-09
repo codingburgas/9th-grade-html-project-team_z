@@ -1,0 +1,62 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4; /* Светлосив фон */
+    color: #333; /* Тъмносив текст */
+}
+
+header {
+    background-color: #2c3e50; /* Тъмносин фон */
+    color: white; /* Бял текст */
+    padding: 2% 0%;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.75rem;
+}
+
+main {
+    max-width: 80%;
+    margin: 4% auto;
+    background-color: white; /* Бял фон */
+    padding: 2%;
+    border-radius: 5%;
+    box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.navbar ul {
+    list-style-type: none;
+    background-color: #34495e; /* Тъмносин фон на менюто */
+    margin: 0;
+    padding: 1% 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    border-bottom: 0.125rem solid #2c3e50;
+}
+
+.navbar li {
+    margin: 0.8%;
+}
+
+.navbar a {
+    display: block;
+    padding: 2% 0.1%;
+    color: #ecf0f1; /* Светъл текст */
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 100%;
+}
+
+.navbar a:hover {
+    background-color: #1abc9c; /* Ярко зелен фон при hover */
+    color: white; /* Бял текст при hover */
+}
+
+.navbar a:active {
+    background-color: #16a085; /* Тъмнозелен фон при активен линк */
+    color: white; /* Бял текст при активен линк */
+}
