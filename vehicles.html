@@ -1,11 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Автомобили - Пожарна Безопасност</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    
+    <header>
+        <div class="header-content">
+            <h1 class="logo"><i class="fa-solid fa-fire-extinguisher"></i> Пожарна Безопасност</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" data-section="home"><i class="fa-solid fa-house"></i> Начало</a></li>
+                    <li><a href="employees.html" data-section="employees"><i class="fa-solid fa-users"></i> Служители</a></li>
+                    <li><a href="vehicles.html" class="active" data-section="vehicles"><i class="fa-solid fa-truck-fire"></i> Автомобили</a></li>
+                    <li><a href="report-incident.html" data-section="report-incident"><i class="fa-solid fa-triangle-exclamation"></i> Докладвай</a></li>
+                    <li><a href="incidents.html" data-section="incidents"><i class="fa-solid fa-list-check"></i> Произшествия</a></li>
+                    <li><a href="statistics.html" data-section="statistics"><i class="fa-solid fa-chart-line"></i> Статистика</a></li>
+                    <li><a href="map.html" data-section="map-section"><i class="fa-solid fa-map-location-dot"></i> Карта</a></li>
+                    <li><a href="messages.html" data-section="messages"><i class="fa-solid fa-envelope"></i> Съобщения</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="icon-button"><i class="fa-solid fa-moon"></i></button>
+        </div>
+    </header>
+    <main class="content-area">
+        <section id="vehicles" class="active">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-truck-fire"></i> Управление на автомобили</h2>
+                <div class="section-actions">
+                    <button class="btn btn-primary" id="add-vehicle-btn"><i class="fa-solid fa-truck-medical"></i> Добави автомобил</button>
+                </div>
+            </div>
+            <div class="filters-and-search">
+                <input type="text" id="vehicle-search" placeholder="Търси по марка, рег. номер, статус...">
+                <select id="vehicle-status-filter">
+                    <option value="all">Всички статуси</option>
+                    <option value="available">Наличен</option>
+                    <option value="in-incident">В произшествие</option>
+                    <option value="maintenance">В ремонт</option>
+                </select>
+            </div>
+            <div class="table-container">
+                <table id="vehicles-table">
+                    <thead>
+                        <tr>
+                            <th>Марка и Модел</th>
+                            <th>Рег. номер</th>
+                            <th>Тип</th>
+                            <th>Екип</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Информационна система за Пожарна Безопасност</p>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        // Specific script for vehicles.html
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dummy data (can be global or fetched)
+            let vehicles = [
+                { id: 1, makeModel: 'Mercedes-Benz Sprinter', regNum: 'A1234BK', type: 'Пожарен', team: 'Alpha', status: 'available' },
+                { id: 2, makeModel: 'Ford F-Series', regNum: 'B5678CC', type: 'Спасителен', team: 'Beta', status: 'in-incident' },
+                { id: 3, makeModel: 'Volvo FL', regNum: 'C9012DE', type: 'Водоноска', team: 'Gamma', status: 'maintenance' },
+                { id: 4, makeModel: 'Iveco Daily', regNum: 'D3456FF', type: 'Пожарен', team: 'Alpha', status: 'available' },
+            ];
+
+            const populateVehiclesTable = (data) => {
+                const tableBody = document.querySelector('#vehicles-table tbody');
+                if (!tableBody) return;
+                tableBody.innerHTML = '';
+
+                data.forEach(vehicle => {
+                    const row = tableBody.insertRow();
+                    row.insertCell().textContent = vehicle.makeModel;
+                    row.insertCell().textContent = vehicle.regNum;
+                    row.insertCell().textContent = vehicle.type;
+                    row.insertCell().textContent = vehicle.team;
+                    row.insertCell().textContent = vehicle.status === 'available' ? 'Наличен' : (vehicle.status === 'in-incident' ? 'В произшествие' : 'В ремонт');
+
+                    const actionsCell = row.insertCell();
+                    actionsCell.classList.add('table-actions');
+                    actionsCell.innerHTML = `
+                        <button class="btn btn-icon edit" data-id="${vehicle.id}"><i class="fa-solid fa-pencil"></i></button>
+                        <button class="btn btn-icon delete" data-id="${vehicle.id}"><i class="fa-solid fa-trash-can"></i></button>
+                    `;
+                });
+            };
+            populateVehiclesTable(vehicles);
+
+            // Add Vehicle button (dummy functionality)
+            document.getElementById('add-vehicle-btn')?.addEventListener('click', () => alert('Отвори форма за добавяне на автомобил.'));
+
+            // Filter/Search functionality (simplified)
+            const vehicleSearch = document.getElementById('vehicle-search');
+            const vehicleStatusFilter = document.getElementById('vehicle-status-filter');
+
+            const filterVehicles = () => {
+                let filtered = vehicles;
+                const searchTerm = vehicleSearch.value.toLowerCase();
+                const statusFilter = vehicleStatusFilter.value;
+
+                if (searchTerm) {
+                    filtered = filtered.filter(veh =>
+                        veh.makeModel.toLowerCase().includes(searchTerm) ||
+                        veh.regNum.toLowerCase().includes(searchTerm) ||
+                        veh.type.toLowerCase().includes(searchTerm) ||
+                        veh.status.toLowerCase().includes(searchTerm)
+                    );
+                }
+
+                if (statusFilter !== 'all') {
+                    filtered = filtered.filter(veh => veh.status === statusFilter);
+                }
+                populateVehiclesTable(filtered);
+            };
+
+            vehicleSearch?.addEventListener('input', filterVehicles);
+            vehicleStatusFilter?.addEventListener('change', filterVehicles);
+        });
+    </script>
 </body>
 </html>
