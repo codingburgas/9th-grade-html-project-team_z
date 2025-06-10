@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Докладвай произшествие - Пожарна Безопасност</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 class="logo"><i class="fa-solid fa-fire-extinguisher"></i> Пожарна Безопасност</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" data-section="home"><i class="fa-solid fa-house"></i> Начало</a></li>
+                    <li><a href="employees.html" data-section="employees"><i class="fa-solid fa-users"></i> Служители</a></li>
+                    <li><a href="vehicles.html" data-section="vehicles"><i class="fa-solid fa-truck-fire"></i> Автомобили</a></li>
+                    <li><a href="report-incident.html" class="active" data-section="report-incident"><i class="fa-solid fa-triangle-exclamation"></i> Докладвай</a></li>
+                    <li><a href="incidents.html" data-section="incidents"><i class="fa-solid fa-list-check"></i> Произшествия</a></li>
+                    <li><a href="statistics.html" data-section="statistics"><i class="fa-solid fa-chart-line"></i> Статистика</a></li>
+                    <li><a href="map.html" data-section="map-section"><i class="fa-solid fa-map-location-dot"></i> Карта</a></li>
+                    <li><a href="messages.html" data-section="messages"><i class="fa-solid fa-envelope"></i> Съобщения</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="icon-button"><i class="fa-solid fa-moon"></i></button>
+        </div>
+    </header>
+    <main class="content-area">
+        <section id="report-incident" class="active">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-triangle-exclamation"></i> Докладване на произшествие</h2>
+            </div>
+            <form id="incident-report-form" class="complex-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="incident-type"><i class="fa-solid fa-clipboard-question"></i> Тип произшествие:</label>
+                        <select id="incident-type" name="incident-type" required>
+                            <option value="">Избери тип</option>
+                            <option value="Пожар">Пожар</option>
+                            <option value="Пътен инцидент">Пътен инцидент</option>
+                            <option value="Спасителна дейност">Спасителна дейност</option>
+                            <option value="Друго">Друго</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="incident-address"><i class="fa-solid fa-location-dot"></i> Адрес:</label>
+                        <input type="text" id="incident-address" name="incident-address" required placeholder="Напр. ул. Витоша 10, София">
+                    </div>
+                    <div class="form-group">
+                        <label for="incident-lat"><i class="fa-solid fa-map-pin"></i> Географска ширина (Latitude):</label>
+                        <input type="number" id="incident-lat" name="incident-lat" step="0.0001" required placeholder="Напр. 42.6977">
+                    </div>
+                    <div class="form-group">
+                        <label for="incident-lon"><i class="fa-solid fa-map-pin"></i> Географска дължина (Longitude):</label>
+                        <input type="number" id="incident-lon" name="incident-lon" step="0.0001" required placeholder="Напр. 23.3219">
+                    </div>
+                    <div class="form-group">
+                        <label for="incident-team"><i class="fa-solid fa-people-group"></i> Избери екип:</label>
+                        <select id="incident-team" name="incident-team" required>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="incident-vehicle"><i class="fa-solid fa-truck-fire"></i> Избери автомобил:</label>
+                        <select id="incident-vehicle" name="incident-vehicle" required>
+                            </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-submit"><i class="fa-solid fa-paper-plane"></i> Докладвай произшествие</button>
+                <div id="report-message" class="message"></div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Информационна система за Пожарна Безопасност</p>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        // Specific script for report-incident.html
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dummy data (can be global or fetched)
+            let employees = [
+                { id: 1, firstName: 'Иван', lastName: 'Петров', EGN: '8012051234', team: 'Alpha', status: 'available' },
+                { id: 2, firstName: 'Мария', lastName: 'Георгиева', EGN: '9203105678', team: 'Beta', status: 'in-incident' },
+                { id: 3, firstName: 'Георги', lastName: 'Иванов', EGN: '7507159876', team: 'Alpha', status: 'available' },
+                { id: 4, firstName: 'Елена', lastName: 'Димитрова', EGN: '8801201122', team: 'Gamma', status: 'on-leave' },
+                { id: 5, firstName: 'Петър', lastName: 'Колев', EGN: '9504253344', team: 'Beta', status: 'available' },
+                { id: 6, firstName: 'Николай', lastName: 'Стоянов', EGN: '8309015566', team: 'Gamma', status: 'in-incident' },
+            ];
+            let vehicles = [
+                { id: 1, makeModel: 'Mercedes-Benz Sprinter', regNum: 'A1234BK', type: 'Пожарен', team: 'Alpha', status: 'available' },
+                { id: 2, makeModel: 'Ford F-Series', regNum: 'B5678CC', type: 'Спасителен', team: 'Beta', status: 'in-incident' },
+                { id: 3, makeModel: 'Volvo FL', regNum: 'C9012DE', type: 'Водоноска', team: 'Gamma', status: 'maintenance' },
+                { id: 4, makeModel: 'Iveco Daily', regNum: 'D3456FF', type: 'Пожарен', team: 'Alpha', status: 'available' },
+            ];
+            let incidents = JSON.parse(localStorage.getItem('incidents')) || []; // Load from storage
+
+            const incidentTeamSelect = document.getElementById('incident-team');
+            const incidentVehicleSelect = document.getElementById('incident-vehicle');
+
+            const populateTeamAndVehicleSelects = () => {
+                if (incidentTeamSelect) {
+                    incidentTeamSelect.innerHTML = '<option value="">Избери екип</option>';
+                    const uniqueTeams = [...new Set(employees.map(emp => emp.team))];
+                    uniqueTeams.forEach(team => {
+                        const option = document.createElement('option');
+                        option.value = team;
+                        option.textContent = team;
+                        incidentTeamSelect.appendChild(option);
+                    });
+                }
+                if (incidentVehicleSelect) {
+                    incidentVehicleSelect.innerHTML = '<option value="">Избери автомобил</option>';
+                    vehicles.forEach(vehicle => {
+                        const option = document.createElement('option');
+                        option.value = vehicle.regNum;
+                        option.textContent = `${vehicle.makeModel} (${vehicle.regNum})`;
+                        incidentVehicleSelect.appendChild(option);
+                    });
+                }
+            };
+            populateTeamAndVehicleSelects();
+
+            const incidentReportForm = document.getElementById('incident-report-form');
+            const reportMessageDiv = document.getElementById('report-message');
+
+            if (incidentReportForm) {
+                incidentReportForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(incidentReportForm);
+                    const newIncident = {
+                        id: incidents.length > 0 ? Math.max(...incidents.map(i => i.id)) + 1 : 1, // Simple ID generation
+                        type: formData.get('incident-type'),
+                        address: formData.get('incident-address'),
+                        lat: parseFloat(formData.get('incident-lat')),
+                        lon: parseFloat(formData.get('incident-lon')),
+                        startTime: new Date().toISOString(),
+                        team: formData.get('incident-team'),
+                        vehicle: formData.get('incident-vehicle'),
+                        endTime: '',
+                        status: 'active'
+                    };
+
+                    incidents.push(newIncident);
+                    localStorage.setItem('incidents', JSON.stringify(incidents)); // Save to storage
+
+                    reportMessageDiv.textContent = 'Произшествието е докладвано успешно!';
+                    reportMessageDiv.classList.remove('error');
+                    reportMessageDiv.classList.add('success');
+                    reportMessageDiv.style.display = 'block';
+                    incidentReportForm.reset();
+
+                    setTimeout(() => {
+                        reportMessageDiv.style.display = 'none';
+                    }, 3000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

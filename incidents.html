@@ -1,11 +1,209 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>История на произшествията - Пожарна Безопасност</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    
+    <header>
+        <div class="header-content">
+            <h1 class="logo"><i class="fa-solid fa-fire-extinguisher"></i> Пожарна Безопасност</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" data-section="home"><i class="fa-solid fa-house"></i> Начало</a></li>
+                    <li><a href="employees.html" data-section="employees"><i class="fa-solid fa-users"></i> Служители</a></li>
+                    <li><a href="vehicles.html" data-section="vehicles"><i class="fa-solid fa-truck-fire"></i> Автомобили</a></li>
+                    <li><a href="report-incident.html" data-section="report-incident"><i class="fa-solid fa-triangle-exclamation"></i> Докладвай</a></li>
+                    <li><a href="incidents.html" class="active" data-section="incidents"><i class="fa-solid fa-list-check"></i> Произшествия</a></li>
+                    <li><a href="statistics.html" data-section="statistics"><i class="fa-solid fa-chart-line"></i> Статистика</a></li>
+                    <li><a href="map.html" data-section="map-section"><i class="fa-solid fa-map-location-dot"></i> Карта</a></li>
+                    <li><a href="messages.html" data-section="messages"><i class="fa-solid fa-envelope"></i> Съобщения</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="icon-button"><i class="fa-solid fa-moon"></i></button>
+        </div>
+    </header>
+    <main class="content-area">
+        <section id="incidents" class="active">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-list-check"></i> История на произшествията</h2>
+                <div class="section-actions">
+                    <button class="btn btn-secondary" id="export-incidents-btn"><i class="fa-solid fa-file-export"></i> Експорт</button>
+                </div>
+            </div>
+            <div class="filters-and-search">
+                <label for="filter-type">Филтър по тип:</label>
+                <select id="filter-type">
+                    <option value="all">Всички</option>
+                    <option value="Пожар">Пожар</option>
+                    <option value="Пътен инцидент">Пътен инцидент</option>
+                    <option value="Спасителна дейност">Спасителна дейност</option>
+                    <option value="Друго">Друго</option>
+                </select>
+
+                <label for="search-input">Търсене:</label>
+                <input type="text" id="search-input" placeholder="Търсене по адрес, екип...">
+
+                <label for="sort-by">Сортирай по:</label>
+                <select id="sort-by">
+                    <option value="date">Дата</option>
+                    <option value="location">Местоположение</option>
+                    <option value="type">Тип</option>
+                    <option value="team">Екип</option>
+                </select>
+                <button id="sort-order" class="btn btn-icon"><i class="fa-solid fa-arrow-up-wide-short"></i></button>
+            </div>
+            <div class="table-container">
+                <table id="incidents-table">
+                    <thead>
+                        <tr>
+                            <th>Тип</th>
+                            <th>Адрес</th>
+                            <th>Координати</th>
+                            <th>Начало</th>
+                            <th>Екип</th>
+                            <th>Автомобил</th>
+                            <th>Край</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Информационна система за Пожарна Безопасност</p>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        // Specific script for incidents.html
+        document.addEventListener('DOMContentLoaded', () => {
+            let incidents = JSON.parse(localStorage.getItem('incidents')) || [
+                { id: 1, type: 'Пожар', address: 'ул. Оборище 25', lat: 42.699, lon: 23.322, startTime: '2025-06-05T10:00:00Z', team: 'Alpha', vehicle: 'A1234BK', endTime: '', status: 'active' },
+                { id: 2, type: 'Пътен инцидент', address: 'бул. България 150', lat: 42.665, lon: 23.308, startTime: '2025-06-04T14:30:00Z', team: 'Beta', vehicle: 'B5678CC', endTime: '', status: 'active' },
+                { id: 3, type: 'Спасителна дейност', address: 'Витоша, Черни връх', lat: 42.593, lon: 23.279, startTime: '2025-06-03T09:00:00Z', team: 'Gamma', vehicle: 'C9012DE', endTime: '2025-06-03T12:00:00Z', status: 'completed' },
+                { id: 4, type: 'Пожар', address: 'кв. Надежда 3', lat: 42.730, lon: 23.300, startTime: '2025-06-01T20:00:00Z', team: 'Alpha', vehicle: 'D3456FF', endTime: '2025-06-01T22:30:00Z', status: 'completed' },
+            ];
+
+            const populateIncidentsTable = (data) => {
+                const tableBody = document.querySelector('#incidents-table tbody');
+                if (!tableBody) return;
+                tableBody.innerHTML = '';
+
+                data.forEach(incident => {
+                    const row = tableBody.insertRow();
+                    row.insertCell().textContent = incident.type;
+                    row.insertCell().textContent = incident.address;
+                    row.insertCell().textContent = `${incident.lat.toFixed(4)}, ${incident.lon.toFixed(4)}`;
+                    row.insertCell().textContent = new Date(incident.startTime).toLocaleString('bg-BG');
+                    row.insertCell().textContent = incident.team;
+                    row.insertCell().textContent = incident.vehicle;
+                    row.insertCell().textContent = incident.endTime ? new Date(incident.endTime).toLocaleString('bg-BG') : 'Неприключено';
+                    row.insertCell().textContent = incident.status === 'active' ? 'Активно' : 'Приключено';
+
+                    const actionsCell = row.insertCell();
+                    actionsCell.classList.add('table-actions');
+                    actionsCell.innerHTML = `
+                        <button class="btn btn-icon view" data-id="${incident.id}"><i class="fa-solid fa-eye"></i></button>
+                        ${incident.status === 'active' ? `<button class="btn btn-icon btn-primary finish-incident-btn" data-id="${incident.id}"><i class="fa-solid fa-check"></i> Завърши</button>` : ''}
+                    `;
+                });
+            };
+            populateIncidentsTable(incidents);
+
+            // Finish Incident button functionality
+            document.getElementById('incidents-table')?.addEventListener('click', (e) => {
+                if (e.target.closest('.finish-incident-btn')) {
+                    const incidentId = parseInt(e.target.closest('.finish-incident-btn').dataset.id);
+                    const incidentToUpdate = incidents.find(inc => inc.id === incidentId);
+                    if (incidentToUpdate && incidentToUpdate.status === 'active') {
+                        incidentToUpdate.status = 'completed';
+                        incidentToUpdate.endTime = new Date().toISOString();
+                        localStorage.setItem('incidents', JSON.stringify(incidents)); // Update storage
+                        populateIncidentsTable(incidents); // Re-render table
+                        alert(`Произшествие ID ${incidentId} е маркирано като завършено.`);
+                    }
+                } else if (e.target.closest('.view')) {
+                    const incidentId = e.target.closest('.view').dataset.id;
+                    alert(`Преглед на произшествие ID: ${incidentId}`);
+                    // In a real app, you'd navigate to a detail page or open a modal
+                }
+            });
+
+            // Filtering and Sorting (simplified)
+            const filterType = document.getElementById('filter-type');
+            const searchInput = document.getElementById('search-input');
+            const sortBy = document.getElementById('sort-by');
+            const sortOrderBtn = document.getElementById('sort-order');
+            let isAscending = true;
+
+            const applyFiltersAndSort = () => {
+                let filteredAndSorted = [...incidents]; // Create a copy
+
+                // Filter
+                const currentFilterType = filterType.value;
+                const currentSearchTerm = searchInput.value.toLowerCase();
+
+                if (currentFilterType !== 'all') {
+                    filteredAndSorted = filteredAndSorted.filter(inc => inc.type === currentFilterType);
+                }
+                if (currentSearchTerm) {
+                    filteredAndSorted = filteredAndSorted.filter(inc =>
+                        inc.address.toLowerCase().includes(currentSearchTerm) ||
+                        inc.team.toLowerCase().includes(currentSearchTerm) ||
+                        inc.type.toLowerCase().includes(currentSearchTerm)
+                    );
+                }
+
+                // Sort
+                const currentSortBy = sortBy.value;
+                filteredAndSorted.sort((a, b) => {
+                    let valA, valB;
+                    switch (currentSortBy) {
+                        case 'date':
+                            valA = new Date(a.startTime);
+                            valB = new Date(b.startTime);
+                            break;
+                        case 'location':
+                            valA = a.address;
+                            valB = b.address;
+                            break;
+                        case 'type':
+                            valA = a.type;
+                            valB = b.type;
+                            break;
+                        case 'team':
+                            valA = a.team;
+                            valB = b.team;
+                            break;
+                    }
+                    if (valA < valB) return isAscending ? -1 : 1;
+                    if (valA > valB) return isAscending ? 1 : -1;
+                    return 0;
+                });
+
+                populateIncidentsTable(filteredAndSorted);
+            };
+
+            filterType?.addEventListener('change', applyFiltersAndSort);
+            searchInput?.addEventListener('input', applyFiltersAndSort);
+            sortBy?.addEventListener('change', applyFiltersAndSort);
+            sortOrderBtn?.addEventListener('click', () => {
+                isAscending = !isAscending;
+                sortOrderBtn.querySelector('i').classList.toggle('fa-arrow-up-wide-short', isAscending);
+                sortOrderBtn.querySelector('i').classList.toggle('fa-arrow-down-wide-short', !isAscending);
+                applyFiltersAndSort();
+            });
+
+            document.getElementById('export-incidents-btn')?.addEventListener('click', () => alert('Експортиране на данни за произшествия.'));
+        });
+    </script>
 </body>
 </html>
