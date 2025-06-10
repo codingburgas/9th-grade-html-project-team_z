@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Начало - Пожарна Безопасност</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css" />
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 class="logo"><i class="fa-solid fa-fire-extinguisher"></i> Пожарна Безопасност</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active" data-section="home"><i class="fa-solid fa-house"></i> Начало</a></li>
+                    <li><a href="employees.html" data-section="employees"><i class="fa-solid fa-users"></i> Служители</a></li>
+                    <li><a href="vehicles.html" data-section="vehicles"><i class="fa-solid fa-truck-fire"></i> Автомобили</a></li>
+                    <li><a href="report-incident.html" data-section="report-incident"><i class="fa-solid fa-triangle-exclamation"></i> Докладвай</a></li>
+                    <li><a href="incidents.html" data-section="incidents"><i class="fa-solid fa-list-check"></i> Произшествия</a></li>
+                    <li><a href="statistics.html" data-section="statistics"><i class="fa-solid fa-chart-line"></i> Статистика</a></li>
+                    <li><a href="map.html" data-section="map-section"><i class="fa-solid fa-map-location-dot"></i> Карта</a></li>
+                    <li><a href="messages.html" data-section="messages"><i class="fa-solid fa-envelope"></i> Съобщения</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="icon-button"><i class="fa-solid fa-moon"></i></button>
+        </div>
+    </header>
+    <main class="content-area">
+        <section id="home" class="active"> <div class="section-header">
+                <h2><i class="fa-solid fa-gauge-high"></i> Табло за управление</h2>
+            </div>
+            <div class="dashboard-cards">
+                <div class="card stat-card">
+                    <div class="card-icon"><i class="fa-solid fa-fire"></i></div>
+                    <div class="card-content">
+                        <h3>Активни произшествия</h3>
+                        <p id="active-incidents-count">0</p>
+                    </div>
+                    <a href="incidents.html" class="card-button"><i class="fa-solid fa-arrow-right"></i> Виж всички</a>
+                </div>
+                <div class="card stat-card">
+                    <div class="card-icon"><i class="fa-solid fa-user-check"></i></div>
+                    <div class="card-content">
+                        <h3>Свободни екипи</h3>
+                        <p id="available-teams-count">0</p>
+                    </div>
+                    <a href="employees.html" class="card-button"><i class="fa-solid fa-arrow-right"></i> Управление</a>
+                </div>
+                <div class="card stat-card">
+                    <div class="card-icon"><i class="fa-solid fa-truck"></i></div>
+                    <div class="card-content">
+                        <h3>Налични автомобили</h3>
+                        <p id="available-vehicles-count">0</p>
+                    </div>
+                    <a href="vehicles.html" class="card-button"><i class="fa-solid fa-arrow-right"></i> Управление</a>
+                </div>
+                
+            </div>
+
+            <div class="quick-actions">
+                <h3>Бързи действия</h3>
+                <div class="action-buttons">
+                    <a href="report-incident.html" class="action-button"><i class="fa-solid fa-plus-circle"></i> Докладвай ново произшествие</a>
+                    <a href="messages.html" class="action-button"><i class="fa-solid fa-paper-plane"></i> Изпрати бързо съобщение</a>
+                    <button class="action-button" id="emergency-call-btn"><i class="fa-solid fa-phone-volume"></i> Спешно повикване</button>
+                </div>
+            </div>
+            
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Информационна система за Пожарна Безопасност</p>
+    </footer>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Specific script for index.html to manage dashboard counts
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dummy data (can be global or fetched)
+            let employees = [
+                { id: 1, firstName: 'Иван', lastName: 'Петров', EGN: '8012051234', team: 'Alpha', status: 'available' },
+                { id: 2, firstName: 'Мария', lastName: 'Георгиева', EGN: '9203105678', team: 'Beta', status: 'in-incident' },
+                { id: 3, firstName: 'Георги', lastName: 'Иванов', EGN: '7507159876', team: 'Alpha', status: 'available' },
+                { id: 4, firstName: 'Елена', lastName: 'Димитрова', EGN: '8801201122', team: 'Gamma', status: 'on-leave' },
+                { id: 5, firstName: 'Петър', lastName: 'Колев', EGN: '9504253344', team: 'Beta', status: 'available' },
+                { id: 6, firstName: 'Николай', lastName: 'Стоянов', EGN: '8309015566', team: 'Gamma', status: 'in-incident' },
+            ];
+            let vehicles = [
+                { id: 1, makeModel: 'Mercedes-Benz Sprinter', regNum: 'A1234BK', type: 'Пожарен', team: 'Alpha', status: 'available' },
+                { id: 2, makeModel: 'Ford F-Series', regNum: 'B5678CC', type: 'Спасителен', team: 'Beta', status: 'in-incident' },
+                { id: 3, makeModel: 'Volvo FL', regNum: 'C9012DE', type: 'Водоноска', team: 'Gamma', status: 'maintenance' },
+                { id: 4, makeModel: 'Iveco Daily', regNum: 'D3456FF', type: 'Пожарен', team: 'Alpha', status: 'available' },
+            ];
+            let incidents = [
+                { id: 1, type: 'Пожар', address: 'ул. Оборище 25', lat: 42.699, lon: 23.322, startTime: '2025-06-05T10:00:00Z', team: 'Alpha', vehicle: 'A1234BK', endTime: '', status: 'active' },
+                { id: 2, type: 'Пътен инцидент', address: 'бул. България 150', lat: 42.665, lon: 23.308, startTime: '2025-06-04T14:30:00Z', team: 'Beta', vehicle: 'B5678CC', endTime: '', status: 'active' },
+                { id: 3, type: 'Спасителна дейност', address: 'Витоша, Черни връх', lat: 42.593, lon: 23.279, startTime: '2025-06-03T09:00:00Z', team: 'Gamma', vehicle: 'C9012DE', endTime: '2025-06-03T12:00:00Z', status: 'completed' },
+                { id: 4, type: 'Пожар', address: 'кв. Надежда 3', lat: 42.730, lon: 23.300, startTime: '2025-06-01T20:00:00Z', team: 'Alpha', vehicle: 'D3456FF', endTime: '2025-06-01T22:30:00Z', status: 'completed' },
+            ];
+
+            const updateDashboardCards = () => {
+                document.getElementById('active-incidents-count').textContent = incidents.filter(i => i.status === 'active').length;
+                document.getElementById('available-teams-count').textContent = employees.filter(e => e.status === 'available').length;
+                document.getElementById('available-vehicles-count').textContent = vehicles.filter(v => v.status === 'available').length;
+                document.getElementById('last-update').textContent = new Date().toLocaleTimeString('bg-BG');
+            };
+            updateDashboardCards();
+
+            const updateEmployeeStatus = () => {
+                const statusDiv = document.getElementById('employee-status');
+                if (!statusDiv) return;
+
+                const statusCounts = employees.reduce((acc, emp) => {
+                    acc[emp.status] = (acc[emp.status] || 0) + 1;
+                    return acc;
+                }, {});
+
+                statusDiv.innerHTML = '<h3>Състояние на екипите:</h3>';
+                Object.keys(statusCounts).forEach(status => {
+                    const statusName = {
+                        'available': 'Свободни',
+                        'in-incident': 'В произшествие',
+                        'on-leave': 'В отпуск'
+                    }[status] || status;
+                    const statusClass = `status-${status.replace(/ /g, '-')}`;
+                    statusDiv.innerHTML += `
+                        <div class="status-item">
+                            <span class="status-label">${statusName}:</span>
+                            <span class="status-value ${statusClass}">${statusCounts[status]}</span>
+                        </div>
+                    `;
+                });
+            };
+            updateEmployeeStatus();
+
+            document.getElementById('refresh-dashboard-data')?.addEventListener('click', updateDashboardCards);
+            document.getElementById('emergency-call-btn')?.addEventListener('click', () => alert('Изпращане на спешно повикване...'));
+        });
+    </script>
+</body>
+</html>
