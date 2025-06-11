@@ -1,11 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Статистика и анализи - Пожарна Безопасност</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="statistics.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    
+    <header>
+        <div class="header-content">
+            <h1 class="logo"><i class="fa-solid fa-fire-extinguisher"></i> Пожарна Безопасност</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" data-section="home"><i class="fa-solid fa-house"></i> Начало</a></li>
+                    <li><a href="employees.html" data-section="employees"><i class="fa-solid fa-users"></i> Служители</a></li>
+                    <li><a href="vehicles.html" data-section="vehicles"><i class="fa-solid fa-truck-fire"></i> Автомобили</a></li>
+                    <li><a href="report-incident.html" data-section="report-incident"><i class="fa-solid fa-triangle-exclamation"></i> Докладвай</a></li>
+                    <li><a href="incidents.html" data-section="incidents"><i class="fa-solid fa-list-check"></i> Произшествия</a></li>
+                    <li><a href="statistics.html" class="active" data-section="statistics"><i class="fa-solid fa-chart-line"></i> Статистика</a></li>
+                    <li><a href="map.html" data-section="map-section"><i class="fa-solid fa-map-location-dot"></i> Карта</a></li>
+                    <li><a href="messages.html" data-section="messages"><i class="fa-solid fa-envelope"></i> Съобщения</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="icon-button"><i class="fa-solid fa-moon"></i></button>
+        </div>
+    </header>
+    <main class="content-area">
+        <section id="statistics" class="active">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-chart-line"></i> Статистика и анализи</h2>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-container card">
+                    <h3>Разпределение на произшествия по тип</h3>
+                    <canvas id="incidentTypeChart"></canvas>
+                </div>
+                <div class="chart-container card">
+                    <h3>Брой произшествия във времеви интервал</h3>
+                    <canvas id="incidentCountOverTimeChart"></canvas>
+                </div>
+                <div class="chart-container card">
+                    <h3>Участие на служители в произшествия</h3>
+                    <canvas id="employeeParticipationChart"></canvas>
+                </div>
+                <div class="chart-container card">
+                    <h3>Натовареност на автомобили</h3>
+                    <canvas id="vehicleUtilizationChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <script src="script.js"></script>
+    <script>
+        
+    </script>
 </body>
 </html>
