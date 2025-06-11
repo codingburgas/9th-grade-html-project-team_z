@@ -23,22 +23,19 @@
 <br>
 
 # 🌐 Used code editors & collaborative services:
-<p align="left gap="10px">
-<a"><img width=70px src="https://github.com/user-attachments/assets/fc4e639f-b678-4b4b-9fe0-fb42d4adc48d" alt=""/></a>
-</p>
+
+ 🎨 Used tools for the visual elements:
 <p align="left" gap="10px">
+<a href="https://www.figma.com/"><img src="https://cdn.freebiesupply.com/logos/large/2x/css3-logo-png-transparent.png" alt="Figma logo" width=70px/></a>
 </p>
-# 🎨 Used tools for the visual elements:
-<p align="left" gap="10px">
-<a href="https://www.figma.com/"><img src="https://img.icons8.com/color/344/figma--v1.png" alt="Figma logo" width=70px/></a>
-</p>
-# 💻 Used technologies for development:
+ 💻 Used technologies for development:
 <div align="left" >
 <p align="left gap="10px">
-<a href="https://cplusplus.com/"><img width=70px src="https://img.icons8.com/fluency/48/c-plus-plus-logo.png" alt="c-plus-plus-logo"/></a>
+<a href="https://cplusplus.com/"><img width=70px src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYk594AhSKw5Eb3iHkPHs_XmpCqaRVgu0mvg&s" alt="c-plus-plus-logo"/></a>
+  <a href="https://cplusplus.com/"><img width=70px src="https://static.vecteezy.com/system/resources/previews/027/127/463/non_2x/javascript-logo-javascript-icon-transparent-free-png.png" alt="c-plus-plus-logo"/></a>
 </p>
 </div>
-# 📑Used tools for our documentation, presentation & communication:
+ 📑Used tools for our documentation, presentation & communication:
 <p align="left">
 <a href="https://www.microsoft.com/en/microsoft-teams/group-chat-software"><img src="https://img.icons8.com/fluency/48/microsoft-teams-2019.png" alt = "MS Teams logo" width=70px /></a>
 <a href="https://www.microsoft.com/en-ww/microsoft-365/word"><img src="https://img.icons8.com/color/48/microsoft-word-2019--v2.png" alt="MS Word logo" width=70px /></a>
@@ -46,7 +43,7 @@
 </p>
 
 # 🌟Presenting and Team Documentation
-- [Documentation](Working on it)
+- [Documentation](https://codingburgas-my.sharepoint.com/:w:/g/personal/nggeorgieva23_codingburgas_bg/EZ7k0hyTRyRHv4rhhpJi2y0BMTHHNbnSjwibZbyhohRxmw?e=LkeXiY)
 - [Presentation](Working on it)
 <br>
 
